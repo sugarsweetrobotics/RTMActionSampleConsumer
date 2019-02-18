@@ -1,0 +1,54 @@
+# ActionCons CMake config file
+#
+# This file sets the following variables:
+# ActionCons_FOUND - Always TRUE.
+# ActionCons_INCLUDE_DIRS - Directories containing the ActionCons include files.
+# ActionCons_IDL_DIRS - Directories containing the ActionCons IDL files.
+# ActionCons_LIBRARIES - Libraries needed to use ActionCons.
+# ActionCons_DEFINITIONS - Compiler flags for ActionCons.
+# ActionCons_VERSION - The version of ActionCons found.
+# ActionCons_VERSION_MAJOR - The major version of ActionCons found.
+# ActionCons_VERSION_MINOR - The minor version of ActionCons found.
+# ActionCons_VERSION_REVISION - The revision version of ActionCons found.
+# ActionCons_VERSION_CANDIDATE - The candidate version of ActionCons found.
+
+message(STATUS "Found ActionCons-@PROJECT_VERSION@")
+set(ActionCons_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(ActionCons_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(ActionCons_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(ActionCons_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(ActionCons_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(ActionCons_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(ActionCons_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(ActionCons_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(ActionCons_VERSION @PROJECT_VERSION@)
+set(ActionCons_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(ActionCons_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(ActionCons_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(ActionCons_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
